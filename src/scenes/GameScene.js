@@ -1,3 +1,4 @@
+import { GameState } from "../config/gameState";
 import Pipeline from "../objects/Pipeline";
 import Player from "../objects/Player";
 
@@ -15,9 +16,15 @@ export default class GameScene extends Phaser.Scene {
 
     // add tubes and player here  >
 
-    this.pipelines = this.physics.add.staticGroup()
-    new Pipeline(this, 500, height, 'tube')
+    // this.pipelines = this.physics.add.staticGroup();
+    this.pipeline = new Pipeline(this, 600, height, "tube");
 
-    this.player = new Player(this, 200, height / 2, 'player')
+    this.player = new Player(this, 200, height / 2, "player");
+
+    this.physics.add.collider(this.player, this.pipeline, () => {
+      this.sound.play("fail");
+      GameState.gameOver = true;
+      this.scene.start("GameOverScene");
+    });
   }
 }
