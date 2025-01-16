@@ -4,7 +4,8 @@ export default class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("background", "./images/woods.webp");
+    // this.load.image("background", "./images/forest.webp");
+    this.load.image("background", "./images/sky.jpg");
   }
 
   create() {
