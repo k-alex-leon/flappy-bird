@@ -18,14 +18,14 @@ export default class GameOverScene extends Phaser.Scene {
     this.add
       .text(width / 2, height / 2 + 50, `Score: ${GameState.score}`, {
         font: "24px Arial",
-        color: "#ff0000",
+        color: "#ffffff",
       })
       .setOrigin(0.5);
 
     this.add
       .text(width / 2, height / 2 + 100, "Press SPACE to restart", {
         font: "24px Arial",
-        color: "#ff0000",
+        color: "#ffffff",
       })
       .setOrigin(0.5);
 
