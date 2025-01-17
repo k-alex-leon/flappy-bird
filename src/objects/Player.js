@@ -1,3 +1,5 @@
+import { GameState } from "../config/gameState";
+
 export default class Player extends Phaser.Physics.Arcade.Image {
   constructor(scene, x, y, texture) {
     super(scene, x, y, texture);
@@ -18,7 +20,7 @@ export default class Player extends Phaser.Physics.Arcade.Image {
     if (!this.scene || !this.cursors) return;
     // checks if key is pressed and sets a delay
     if (this.scene.input.keyboard.checkDown(this.cursors.up, 450)) {
-      this.setVelocityY(-100);
+      this.setVelocityY(GameState.difficulty.playerJump);
       this.scene.sound.play("jump");
     }
 

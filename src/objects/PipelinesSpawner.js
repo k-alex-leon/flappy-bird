@@ -5,12 +5,11 @@ export default class PipelinesSpawner extends Phaser.Physics.Arcade.Group {
   constructor(world, scene, children = []) {
     super(world, scene, children);
     scene.add.existing(this);
-    this.spawnInterval = 3000;
   }
 
   startSpawning() {
     this.spawnTimer = this.scene.time.addEvent({
-      delay: this.spawnInterval,
+      delay: GameState.difficulty.spawnDelay,
       callback: this.spawn,
       callbackScope: this,
       loop: true,
@@ -19,10 +18,10 @@ export default class PipelinesSpawner extends Phaser.Physics.Arcade.Group {
 
   spawn() {
     const { width, height } = this.scene.scale;
-    const gap = 25; // Set your desired constant gap size
+    const gap = 100; // Set your desired constant gap size
 
     // Randomly position the center of the gap
-    const gapCenter = Phaser.Math.Between(100, height - 100)
+    const gapCenter = Phaser.Math.Between(100, height - 100);
 
     // Calculate heights for top and bottom pipes
     const topPipeHeight = gapCenter - gap;
@@ -64,7 +63,9 @@ export default class PipelinesSpawner extends Phaser.Physics.Arcade.Group {
         pipe.hasScored = true;
         GameState.score += pipe.isTop ? 1 : 0; // => this help with duplicate data
         this.scene.updateScoreDisplay(); // => update the score on screen
-        if(pipe.isTop) this.scene.sound.play('coin')
+        if (pipe.isTop) this.scene.sound.play("coin");
+
+        this.scene.increaseDifficulty();
       }
     });
   }

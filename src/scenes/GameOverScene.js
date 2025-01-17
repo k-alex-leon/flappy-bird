@@ -9,30 +9,37 @@ export default class GameOverScene extends Phaser.Scene {
     const { width, height } = this.scale;
 
     this.add
+      .image(width / 2, height / 2, "background")
+      .setOrigin(0.5)
+      .setDisplaySize(width, height);
+
+    this.add
       .text(width / 2, height / 2, "GAME OVER", {
-        font: "48px Arial",
+        font: "128px Jersey",
         color: "#ff0000",
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setStroke('#000', 4);
 
     this.add
-      .text(width / 2, height / 2 + 50, `Score: ${GameState.score}`, {
-        font: "24px Arial",
+      .text(width / 2, height / 2 + 70, `Score: ${GameState.score}`, {
+        font: "64px Jersey",
         color: "#ffffff",
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setStroke('#000', 4);
 
     this.add
-      .text(width / 2, height / 2 + 100, "Press SPACE to restart", {
-        font: "24px Arial",
+      .text(width / 2, height / 2 + 120, "Press SPACE to restart", {
+        font: "32px Jersey",
         color: "#ffffff",
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setStroke('#000', 2); // => adding stroke to text
 
-    this.input.keyboard
-      .once("keydown-SPACE", () => {
-        GameState.reset();
-        this.scene.start("GameScene");
-      });
+    this.input.keyboard.once("keydown-SPACE", () => {
+      GameState.reset();
+      this.scene.start("GameScene");
+    });
   }
 }

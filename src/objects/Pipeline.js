@@ -1,3 +1,5 @@
+import { GameState } from "../config/gameState";
+
 export default class Pipeline extends Phaser.Physics.Arcade.Image {
   constructor(scene, x, y, texture, height = 400, isTop = false) {
     super(scene, x, y, texture);
@@ -16,7 +18,7 @@ export default class Pipeline extends Phaser.Physics.Arcade.Image {
   }
 
   move() {
-    this.setVelocityX(-200);
+    this.setVelocityX(GameState.difficulty.pipesSpeed);
   }
 
   disable() {

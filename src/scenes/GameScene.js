@@ -22,10 +22,6 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = new Player(this, 200, height / 2, "player");
 
-    this.physics.world.on("worldbounds", (body) => {
-      body.gameObject.onWorldBounds();
-    });
-
     // game over
     this.physics.add.overlap(this.player, this.pipes, (ply, pipe) => {
       this.gameOver();
@@ -34,12 +30,15 @@ export default class GameScene extends Phaser.Scene {
     // score text
     this.score = this.add
       .text(width / 2, 30, `${GameState.score}`, {
-        font: "32px Arial",
+        font: "64px Jersey",
         color: "#ffffff",
       })
-      .setOrigin(0.5);
+      .setOrigin(0.5)
+      .setStroke("#000", 2)
+      .setDepth(99); // => bring to the front
 
-    this.score.setDepth(99);
+      // up arrow image display
+    this.add.image(width / 2, height - 100, "arrow").setOrigin(0.5).setDepth(99);
   }
 
   update(time, delta) {
@@ -51,6 +50,22 @@ export default class GameScene extends Phaser.Scene {
 
   updateScoreDisplay() {
     this.score.setText(`${GameState.score}`);
+  }
+
+  increaseDifficulty() {
+    if (GameState.score % 10 == 0) {
+      // => every 10 the difficulty changes
+      GameState.difficulty.pipesSpeed -= 20; // pipes run faster
+      GameState.difficulty.playerJump -= 10; // player jumps larger distance
+      GameState.difficulty.spawnInterval = Math.max(
+        1000,
+        GameState.difficulty.spawnInterval - 200
+      ); // Reduce spawn interval, with a minimum of 1 second
+
+      // Restart the spawn timer with the new interval
+      this.pipes.spawnTimer.remove();
+      this.pipes.startSpawning();
+    }
   }
 
   gameOver() {
