@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import { GAME_SIZE, PARENT_ID } from "./constants";
 
-let isDebuging = true;
+let isDebuging = false;
 const scene = document.getElementById("canvas-scene");
 
 export const GameConfig = {
